@@ -1,0 +1,22 @@
+services:
+  minecraft:
+    image: itzg/minecraft-server:latest
+    container_name: minecraft
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    ports:
+      - "${MC_PORT:-25565}:25565"
+    environment:
+      EULA: "${EULA:-FALSE}"          # À passer à TRUE après avoir lu https://aka.ms/MinecraftEULA
+      TYPE: "${MC_TYPE:-PAPER}"       # VANILLA, PAPER, FABRIC, FORGE...
+      VERSION: "${MC_VERSION:-LATEST}"
+      MEMORY: "${MC_MEMORY:-2G}"
+      MOTD: "${MC_MOTD:-Serveur Minecraft}"
+      DIFFICULTY: "${MC_DIFFICULTY:-normal}"
+      MAX_PLAYERS: "${MC_MAX_PLAYERS:-10}"
+      ONLINE_MODE: "TRUE"
+      OPS: "${MC_OPS:-}"              # Pseudos opérateurs, séparés par des virgules
+      ENABLE_RCON: "false"
+    volumes:
+      - ./data:/data
